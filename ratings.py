@@ -1,11 +1,25 @@
 """Restaurant rating lister."""
 
 import random
+import sys
+import os
+
+file_directory = os.listdir()
+
+print(f"These are the files in your directory: {file_directory}")
+
+filename = input("Which file would you like to open? (include suffix) ")
+
+our_path = "/Users/jpiquepese/src/dicts-restaurant-ratings/" + filename
+isFile = os.path.isfile(our_path)
+
+if isFile == False:
+    filename = input("Please enter a valid file: ")
 
 #create an empty dictionary variable
 restaurant_and_ratings = {}
 #open file = variable*
-scores_data = open("scores.txt")
+scores_data = open(filename)
 #split the lines by the delimiter :
 for line in scores_data:
     white_space_gone = line.strip()
@@ -16,7 +30,7 @@ for line in scores_data:
 
 while True:
 
-    new_user_input = input("What would you like to do? Press [Q] to quit. [A] to add restaurant data. [S] to show all data. [R] to update random restaurant rating")
+    new_user_input = input("What would you like to do? Press [Q] to quit. [A] to add restaurant data. [S] to show all data. [R] to update random restaurant rating. [U] to update chosen restaurant rating. ")
     if new_user_input == "Q" or new_user_input == "q":
         break
 
@@ -46,8 +60,13 @@ while True:
     elif new_user_input == "R" or new_user_input == "r":
         restaurant_list = list(restaurant_and_ratings.keys())
         random_restaurant = random.choice(restaurant_list)
-        new_user_rating = input(f"What would you like to update {random_restaurant}'s rating to?")
+        new_user_rating = input(f"What would you like to update {random_restaurant}'s rating to? ")
         restaurant_and_ratings[random_restaurant] = new_user_rating
-        
 
+    elif new_user_input == "U" or new_user_input == "u":
+        restaurant_name = input("Which restaurant would you like to update a rating for? ")
+        new_restaurant_rating = input("Okay... what do you wanna rate it? ")
+
+        if restaurant_name in restaurant_and_ratings:
+            restaurant_and_ratings[restaurant_name] = new_restaurant_rating
 
